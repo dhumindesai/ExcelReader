@@ -6,31 +6,28 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Date;
+import java.util.*;
 import java.util.Iterator;
 import java.text.SimpleDateFormat;
 
 
 public class ApachePOIExcelReader {
 
-    public static void readExcel(String FILE_NAME, int sheetIndex){
+    public static void readWorksheet(String filePath, int sheetIndex){
         try {
 
             // Getting Workbook objects and Row Iterator
-            FileInputStream excelFile = new FileInputStream(new File(FILE_NAME));
+            FileInputStream excelFile = new FileInputStream(new File(filePath));
             Workbook workbook = new HSSFWorkbook(excelFile);
             Sheet datatypeSheet = workbook.getSheetAt(sheetIndex);
             Iterator<Row> iterator = datatypeSheet.iterator();
 
             // Getting Worksheet information from Worksheet's object
             int noOfCol = datatypeSheet.getRow(0).getPhysicalNumberOfCells();
-            int noOfRows = datatypeSheet.getPhysicalNumberOfRows();
-            String worksheetName = datatypeSheet.getSheetName().toUpperCase();
             int count = 0; // for Row counts
 
-
             while (iterator.hasNext()) {   // Loop for Row
-                if (count < 2) printDashLine(noOfCol);
+                if (count < 2) HelperMethods.printDashLine(noOfCol);
                 count++;
                 int cellNum = 0; //  cell number  in the current row
                 Row currentRow = iterator.next();
@@ -42,27 +39,60 @@ public class ApachePOIExcelReader {
                     printCell(currentCell);
                 }
                 System.out.println();
-
             }
-            printDashLine(noOfCol);
-
-            //print Total Rows and Columns in the worksheet
-            System.out.println("Current Worksheet: "+worksheetName);
-            System.out.println("Total Rows: "+noOfRows);
-            System.out.println("Total Columns: "+noOfCol);
+            HelperMethods.printDashLine(noOfCol);
+            HelperMethods.printRowsColumnCountsOfWorksheet(workbook,sheetIndex);
+            HelperMethods.printDataTypes(workbook,sheetIndex);
 
         } catch (FileNotFoundException e) {
-            System.out.println("File Path is invalid. Please provide the valid file path.");
-        } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("File Path is invalid.");
+        } catch (IllegalArgumentException e) {
+            System.out.println("One of the arguments is incorrect.");
+            HelperMethods.printUsage();
+        } catch (IndexOutOfBoundsException e){
+            System.out.println("No arguments are given.\n");
+            HelperMethods.printUsage();
+        } catch (IOException e){
+            System.out.println("Could not load the excel file");
         }
+    }
+
+    //Method for MetaData
+    public static void printMetadata(String filePath){
+        HelperMethods.printDashLine(2);
+        System.out.println("\t\t\t\t\t\t\t\tMETADATA");
+        HelperMethods.printDashLine(2);
+        try{
+            //get all worksheets in excel file
+            FileInputStream excelFile = new FileInputStream(new File(filePath));
+            Workbook workbook = new HSSFWorkbook(excelFile);
+
+            int noOfWorksheets =  workbook.getNumberOfSheets();
+            System.out.println("Total Worksheets in excel file: "+noOfWorksheets + "\n");
+            System.out.println("Worksheets: ");
+            HelperMethods.printSheetNames(workbook);
+
+            //get Rows and Columns of each Worksheets
+            for(int i = 0; i < noOfWorksheets; i++) {
+                Sheet datatypeSheet = workbook.getSheetAt(i);
+                HelperMethods.printRowsColumnCountsOfWorksheet(workbook, i);
+                HelperMethods.printDataTypes(workbook, i);
+            }
+        }
+        catch(FileNotFoundException e){
+            System.out.println("The File Path is Invalid.");
+
+        }catch(IOException e){
+            System.out.println("Could not load Excel File.");
+        }
+
     }
 
 
     //Method for Printing Cells according to their type
     public static void printCell(Cell currentCell){
         if (currentCell.getCellTypeEnum() == CellType.STRING) {
-            System.out.format("%-35s",wraptext(currentCell.getStringCellValue()));
+            System.out.format("%-35s",HelperMethods.wraptext(currentCell.getStringCellValue()));
 
         } else if (currentCell.getCellTypeEnum() == CellType.NUMERIC) {
             if (HSSFDateUtil.isCellDateFormatted(currentCell)) {  // Checking if NUMERIC type is Date or not
@@ -96,24 +126,10 @@ public class ApachePOIExcelReader {
             System.out.format("%-35s","NULL");
         }
 
+        System.out.format("%-5s","|");
+
     }
 
-    public static void printDashLine(int columnCounts){
-        for(int i=0; i<columnCounts*35; i++){
-            System.out.print("-");
-        }
-        System.out.println();
-    }
 
-    public static String wraptext(String str){
-        final int FIXED_WIDTH = 30;
-        String temp = "";
-        if(str !=null && str.length() > FIXED_WIDTH) {
-            temp = str.substring(0, FIXED_WIDTH) + "...";
-        } else {
-            temp = str;
-        }
-        return temp;
-    }
 
 }
