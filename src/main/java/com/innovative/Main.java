@@ -1,10 +1,11 @@
-
+/*
 public class Main {
     public static void main(String[] args){
+
          String FILE_NAME;
          int SHEET_INDEX;
         try{
-
+            /*
             switch(args.length) {
                 case 0:
                 {
@@ -30,11 +31,15 @@ public class Main {
                     break;
                 }
             }
+            
 
+            ApachePOIExcelReader.printQuery("/Users/dhrumindesai/Desktop/JavaProjects/Sample - Superstore Sales (Excel).xls" ,1,4,'n',"25");
         } catch (Exception e){
+                //e.printStackTrace();
                 System.out.println("Something went wrong.");
                // HelperMethods.printUsage();
         }
 
     }
 }
+*/

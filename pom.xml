@@ -5,8 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.innovative</groupId>
-    <artifactId>CsvFileReader</artifactId>
-    <version>1.0-SNAPSHOT</version>
+   <!-- <artifactId>CsvFileReader</artifactId> -->
+    <artifactId>ExcelFileReader</artifactId>
+    <version>1.0</version>
     <dependencies>
         <dependency>
             <groupId>org.apache.poi</groupId>
@@ -21,7 +22,7 @@
     </dependencies>
 
     <build>
-        <plugins>
+      <!--  <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                     <artifactId>exec-maven-plugin</artifactId>
@@ -39,7 +40,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>Main</mainClass>
+                            <mainClass><Main></Main></mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
@@ -56,7 +57,7 @@
                     </execution>
                 </executions>
             </plugin>
-        </plugins>
+        </plugins> -->
     </build>
 
 

@@ -1,3 +1,5 @@
+package com.innovative;
+
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.ss.usermodel.*;
 
@@ -9,6 +11,7 @@ public class HelperMethods {
         System.out.println("OR");
         System.out.println("java -jar FILEPATH [worksheet index]");
     }
+
 
     public static void printDashLine(int columnCounts){
         for(int i=0; i<(columnCounts*40)-4; i++){
@@ -29,13 +32,10 @@ public class HelperMethods {
     }
 
     public static void printSheetNames(Workbook workbook){
-        //List<String> sheetNames = new ArrayList<String>();
         for (int i=0; i<workbook.getNumberOfSheets(); i++) {
-           // sheetNames.add( workbook.getSheetName(i) );
             System.out.println(i+1 + ". "+ workbook.getSheetName(i));
         }
         System.out.println();
-        //return sheetNames;
     }
 
     public static void printRowsColumnCountsOfWorksheet(Workbook workbook,int sheetIndex){
