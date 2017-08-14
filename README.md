@@ -7,11 +7,13 @@
 INSTALLATION:
 
 git clone https://github.com/dhumindesai/ExcelReader
+
 mvn clean install
 
 METHODS:
 
 1. ApachePOIExcelReader.readWorksheet(String filePath, int sheetIndex);
+
  /*
         *This method displays the worksheet in table format and the summary.
         * Input: file path, worksheet number
@@ -19,6 +21,7 @@ METHODS:
  */
 
 2. ApachePOIExcelReader.printMetadata(String filePath)
+
 /*
         * This method prints Metadata of the Excel File
         * Input:
@@ -27,6 +30,7 @@ METHODS:
  */
  
  3. ApachePOIExcelReader.printQuery(String filePath, int sheetIndex, int columnNum, char operator, String Operand)
+ 
 /*
         * This method filters the given worksheet by the column and condition and prints it.
         * input:
