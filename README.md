@@ -2,13 +2,19 @@
 - Prints MetaData of XLS files
 - Prints Worksheets in clean table format in Terminal
 - Prints summary about the given Worksheet
-- Prints output by given Query (for perticular Column)
+- Prints output for given Query (for perticular Column)
 
 INSTALLATION:
 
 git clone https://github.com/dhumindesai/ExcelReader
 
 mvn clean install
+
+<dependency>
+  <groupId>com.innovative</groupId>
+  <artifactId>ExcelFileReader</artifactId>
+  <version>1.0</version>
+</dependency>
 
 METHODS:
 
